@@ -2,3 +2,19 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: logging
+
+
+---
+
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: monitoring
+
+---
+
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: static-website
+
