@@ -13,8 +13,6 @@ Just kubectl apply -f for-everything.yaml. k8s is ez.
 
 ## 2. How to contribute
 
-I'm gonna need kafka in it. 
-
-It only tested on k8s of openstack's magnum deployment, can you help me run on GKE, AKS and EKS? Home-lane Raspberry pi cluster will be awesome.
+It only tested on k8s of openstack's magnum deployment. Can you help me run on GKE, AKS and EKS? Home-lane Raspberry pi cluster will be awesome.
 
 
