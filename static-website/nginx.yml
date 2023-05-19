@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: user-a
+  namespace: static-website
 spec:
   replicas: 1
   selector:
@@ -27,7 +27,7 @@ spec:
         command: [ "/bin/bash" ]
         args: [ "-c", "while true; do echo 'hodor' ; sleep 60;done" ]
 
-# In case of log to file
+# In case of log to file, or you need to host img. you will need pv.
 #      volumes:
 #      - name: csi-data-cinderplugin1
 #        persistentVolumeClaim:
