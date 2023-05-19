@@ -1,0 +1,15 @@
+kubectl -n logging port-forward service/kibana 5601:5601
+
+
+log from client
+http://localhost:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15m,to:now))&_a=(columns:!(kubernetes.labels.app,log_processed.source),filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'9835e840-f489-11ed-ae66-03ba2b434714',key:kubernetes.labels.app,negate:!f,params:(query:elasticsearch-data),type:phrase),query:(match_phrase:(kubernetes.labels.app:elasticsearch-data))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'9835e840-f489-11ed-ae66-03ba2b434714',key:kubernetes.labels.app,negate:!f,params:(query:elasticsearch),type:phrase),query:(match_phrase:(kubernetes.labels.app:elasticsearch)))),index:'9835e840-f489-11ed-ae66-03ba2b434714',interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))
+
+query elasticsearch
+http://localhost:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-15h,to:now))&_a=(columns:!(kubernetes.labels.app,log_processed.source),filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'9835e840-f489-11ed-ae66-03ba2b434714',key:kubernetes.labels.app,negate:!f,params:(query:elasticsearch-data),type:phrase),query:(match_phrase:(kubernetes.labels.app:elasticsearch-data))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'9835e840-f489-11ed-ae66-03ba2b434714',key:kubernetes.labels.app,negate:!f,params:(query:elasticsearch),type:phrase),query:(match_phrase:(kubernetes.labels.app:elasticsearch))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'9835e840-f489-11ed-ae66-03ba2b434714',key:log_processed.level,negate:!f,params:(query:TRACE),type:phrase),query:(match_phrase:(log_processed.level:TRACE)))),index:'9835e840-f489-11ed-ae66-03ba2b434714',interval:auto,query:(language:kuery,query:''),sort:!(!('@timestamp',desc)))
+
+firing result
+http://localhost:5601/app/discover#/?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:now-1h,to:now))&_a=(columns:!(kubernetes.labels.app,log),filters:!(('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'9835e840-f489-11ed-ae66-03ba2b434714',key:kubernetes.container_name,negate:!f,params:(query:controller-logging),type:phrase),query:(match_phrase:(kubernetes.container_name:controller-logging))),('$state':(store:appState),meta:(alias:!n,disabled:!f,index:'9835e840-f489-11ed-ae66-03ba2b434714',key:kubernetes.labels.app,negate:!f,params:(query:controller-logging),type:phrase),query:(match_phrase:(kubernetes.labels.app:controller-logging)))),index:'9835e840-f489-11ed-ae66-03ba2b434714',interval:auto,query:(language:kuery,query:%22%2Falarm%3Fid%3Da%22),sort:!(!('@timestamp',desc)))
+
+resource usage
+
+http://localhost:3000/d/c906be3d-3490-4e8d-a247-3fc6008ce8c5/kubernetes-pod-metrics?orgId=1&refresh=10s&var-Node=All&var-Pod=elastalert-elasalert2-7456667d8f-7zjkc&var-Pod_ip=10.3.3.14&var-phase=Failed&var-container=alertmanager&from=now-6h&to=now

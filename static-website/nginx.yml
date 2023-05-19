@@ -1,0 +1,46 @@
+### nginx-os-pv.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: user-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: IfNotPresent
+        name: nginx
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      - name: netshoot-slicar
+        image: nicolaka/netshoot
+        command: [ "/bin/bash" ]
+        args: [ "-c", "while true; do echo 'hodor' ; sleep 60;done" ]
+
+# In case of log to file
+#      volumes:
+#      - name: csi-data-cinderplugin1
+#        persistentVolumeClaim:
+#          claimName: csi-pvc-cinderplugin1
+#          readOnly: false
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: csi-pvc-cinderplugin1
+#spec:
+#  accessModes:
+#  - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 2Gi

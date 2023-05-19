@@ -1,0 +1,33 @@
+# like controller logging, but instead of control notification, it logs web hook to stout
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: logging
+  name: controller-logging
+  labels:
+    app: controller-logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: controller-logging
+  template:
+    metadata:
+      name: controller-logging
+      labels:
+        app: controller-logging
+    spec:
+      containers:
+        - name: controller-logging
+          image: mendhak/http-https-echo:29
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort:  8443
+              name: webhook-https
+            - containerPort: 8080
+              name: webhook-http
+        - name: netshoot-slicar
+          image: nicolaka/netshoot
+          command: [ "/bin/bash" ]
+          args: [ "-c", "while true; do echo 'hodor'; sleep 60;done" ]
+      restartPolicy: Always
